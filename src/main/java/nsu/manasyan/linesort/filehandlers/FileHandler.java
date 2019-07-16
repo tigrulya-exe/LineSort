@@ -26,4 +26,5 @@ public abstract class FileHandler implements Runnable {
     public Path getOutFileName() {
         return outFileName;
     }
+
 }

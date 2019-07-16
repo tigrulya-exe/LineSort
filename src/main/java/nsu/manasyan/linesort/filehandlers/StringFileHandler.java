@@ -9,7 +9,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class StringFileHandler extends FileHandler{
-    private Comparator<String> comparator;
+    private Comparator<String>  comparator;
 
     public StringFileHandler(Path filePath, String outFilePrefix, Comparator<String> comparator) {
         super(filePath,outFilePrefix);

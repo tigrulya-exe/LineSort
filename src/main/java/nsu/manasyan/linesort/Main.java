@@ -14,7 +14,7 @@ public class Main {
     private static void test(){
         FileLineSortingService sortingService = new FileLineSortingService();
         try {
-            sortingService.start(directoryPath, "sort_", "s", "a");
+            sortingService.start(directoryPath, "sort_", "i", "d");
         } catch (IOException e) {
             e.printStackTrace();
         }

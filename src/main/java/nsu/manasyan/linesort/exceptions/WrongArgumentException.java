@@ -1,4 +1,4 @@
-package nsu.manasyan.linesort;
+package nsu.manasyan.linesort.exceptions;
 
 public class WrongArgumentException extends RuntimeException {
     public WrongArgumentException(String msg){

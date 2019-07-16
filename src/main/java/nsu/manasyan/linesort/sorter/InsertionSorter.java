@@ -1,6 +1,5 @@
 package nsu.manasyan.linesort.sorter;
 
-import nsu.manasyan.linesort.sorter.Sorter;
 
 import java.util.Collections;
 import java.util.Comparator;

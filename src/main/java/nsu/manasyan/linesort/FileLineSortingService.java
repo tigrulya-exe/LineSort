@@ -1,5 +1,6 @@
 package nsu.manasyan.linesort;
 
+import nsu.manasyan.linesort.exceptions.WrongArgumentException;
 import nsu.manasyan.linesort.factories.FileHandlersFactory;
 import nsu.manasyan.linesort.filehandlers.FileHandler;
 
@@ -17,6 +18,8 @@ import java.util.stream.Stream;
 public class FileLineSortingService {
 
     private ExecutorService executorService = Executors.newCachedThreadPool();
+    private FileHandlersFactory factory = FileHandlersFactory.getInstance();
+
 
     public void start(String directoryPath, String outPrefix, String contentType, String sortMode) throws IOException {
         var files = extractFiles(directoryPath);
@@ -42,7 +45,6 @@ public class FileLineSortingService {
     }
 
     private void registerTask(Path filePath, String outPrefix, String contentType, String sortMode){
-        FileHandlersFactory factory = FileHandlersFactory.getInstance();
         FileHandler fileHandler = factory.getFileHandler(contentType,filePath,outPrefix, getComparator(sortMode));
 
         executorService.submit(fileHandler);

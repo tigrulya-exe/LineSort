@@ -6,6 +6,6 @@ import java.nio.file.Path;
 import java.util.Comparator;
 
 @FunctionalInterface
-public interface FileHandlerCreator {
-    FileHandler create (Path filePath, String outFilePrefix, Comparator<String> comparator);
+public interface FileHandlerCreator<T> {
+    FileHandler create (Path filePath, String outFilePrefix, Comparator<T> comparator);
 }
