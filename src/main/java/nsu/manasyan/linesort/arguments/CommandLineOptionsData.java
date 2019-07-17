@@ -19,8 +19,13 @@ public class CommandLineOptionsData extends OptionsBase {
 
     @Option(name = "sort-mode",
             category = "required",
-            help = "Ascending or descending order\n\nExecution template: java -jar *jar-file path* " +
-                    "[path to directory of files to be sorted] [other options]",
+            help = "Ascending or descending order",
             defaultValue = "")
     public String sortMode;
+
+    @Option(name = "help",
+            category = "optional",
+            help = "Show information about all options\n\nExecution template: java -jar *jar-file path* [path to directory of files to be sorted] [other options]",
+            defaultValue = "")
+    public String help;
 }
