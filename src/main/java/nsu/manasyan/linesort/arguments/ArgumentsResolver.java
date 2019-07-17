@@ -4,18 +4,26 @@ import com.google.devtools.common.options.OptionsParser;
 import nsu.manasyan.linesort.exceptions.WrongArgumentException;
 
 public class ArgumentsResolver {
-    public static CommandLineOptions checkArgs(String[] args){
+    private static final int argsCount = 4;
+
+    public static CommandLineOptions resolve(String[] args){
         OptionsParser optionsParser = OptionsParser.newOptionsParser(CommandLineOptionsData.class);
         optionsParser.parseAndExitUponError(args);
 
         CommandLineOptions commandLineOptions = new CommandLineOptions(optionsParser.getOptions(CommandLineOptionsData.class));
+        commandLineOptions.getOptions().forEach(ArgumentsResolver::checkIsEmpty);
 
-        if(args.length != 4 || commandLineOptions.getOutPrefix().isEmpty() || commandLineOptions.getContentType().isEmpty() || commandLineOptions.getSortMode().isEmpty()){
-            throw new WrongArgumentException("Wrong arguments");
+        if(args.length != argsCount){
+            throw new WrongArgumentException("Wrong argument count, must be: " + argsCount);
         }
 
         commandLineOptions.setDirectoryPath(args[0]);
-
         return commandLineOptions;
+    }
+
+    private static void checkIsEmpty(String option){
+        if(option.isEmpty()){
+            throw new WrongArgumentException("Wrong argument value: " + option);
+        }
     }
 }

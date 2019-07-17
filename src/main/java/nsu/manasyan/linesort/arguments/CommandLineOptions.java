@@ -1,5 +1,7 @@
 package nsu.manasyan.linesort.arguments;
 
+import java.util.List;
+
 public class CommandLineOptions {
     private CommandLineOptionsData optionsData;
 
@@ -23,6 +25,10 @@ public class CommandLineOptions {
 
     public String getDirectoryPath() {
         return directoryPath;
+    }
+
+    public List<String> getOptions(){
+        return List.of(optionsData.outPrefix, optionsData.contentType, optionsData.sortMode);
     }
 
     public void setDirectoryPath(String directoryPath) {

@@ -26,11 +26,10 @@ public class IntegerFileHandler extends FileHandler {
             List<Integer> values = strings.stream().map(Integer::parseInt).collect(Collectors.toList());
             sorter.sort(values,comparator);
             Files.write(getOutFileName(),getOutLines(values));
-
         }  catch (IOException e) {
             e.printStackTrace();
         } catch (NumberFormatException nfe){
-            throw new WrongFileTypeException("Wrong file type");
+            System.err.println(getFileTypeErrorMessage());
         }
     }
 

@@ -20,16 +20,18 @@ public class FileLineSortingService {
     private ExecutorService executorService = Executors.newCachedThreadPool();
     private FileHandlersFactory factory = FileHandlersFactory.getInstance();
 
-
-    public void start(String directoryPath, String outPrefix, String contentType, String sortMode) throws IOException {
+    public void start(String directoryPath, String outPrefix, String contentType, String sortMode){
         var files = extractFiles(directoryPath);
         files.forEach((f -> registerTask(f,outPrefix,contentType,sortMode)));
         executorService.shutdown();
     }
 
-    private List<Path> extractFiles(String directoryPath) throws IOException{
+    private List<Path> extractFiles(String directoryPath){
         try (Stream<Path> paths = Files.walk(Paths.get(directoryPath))) {
             return paths.filter(Files::isRegularFile).collect(Collectors.toList());
+        }
+        catch (IOException ioe){
+            throw new WrongArgumentException("Wrong files directory: " + directoryPath);
         }
     }
 

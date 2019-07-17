@@ -27,4 +27,7 @@ public abstract class FileHandler implements Runnable {
         return outFileName;
     }
 
+    protected String getFileTypeErrorMessage(){
+        return "Wrong file type in: " + filePath;
+    }
 }
