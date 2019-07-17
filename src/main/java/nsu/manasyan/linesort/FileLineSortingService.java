@@ -16,14 +16,18 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class FileLineSortingService {
+    private ExecutorService executor = Executors.newCachedThreadPool();
+    private FileHandlersFactory fileHandlersFactory = FileHandlersFactory.getInstance();
 
-    private ExecutorService executorService = Executors.newCachedThreadPool();
-    private FileHandlersFactory factory = FileHandlersFactory.getInstance();
+    public FileLineSortingService(){
+        // SIGTERM handling
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> executor.shutdownNow()));
+    }
 
     public void start(String directoryPath, String outPrefix, String contentType, String sortMode){
         var files = extractFiles(directoryPath);
-        files.forEach((f -> registerTask(f,outPrefix,contentType,sortMode)));
-        executorService.shutdown();
+        files.forEach((file -> registerTask(file,outPrefix,contentType,sortMode)));
+        executor.shutdown();
     }
 
     private List<Path> extractFiles(String directoryPath){
@@ -37,7 +41,7 @@ public class FileLineSortingService {
 
     private <T extends Comparable<? super T>> Comparator<T> getComparator(String sortMode){
         switch (sortMode){
-            case "a" :
+            case "a":
                 return Comparator.naturalOrder();
             case "d":
                 return Comparator.reverseOrder();
@@ -47,8 +51,7 @@ public class FileLineSortingService {
     }
 
     private void registerTask(Path filePath, String outPrefix, String contentType, String sortMode){
-        FileHandler fileHandler = factory.getFileHandler(contentType,filePath,outPrefix, getComparator(sortMode));
-
-        executorService.submit(fileHandler);
+        FileHandler fileHandler = fileHandlersFactory.getFileHandler(contentType,filePath,outPrefix, getComparator(sortMode));
+        executor.submit(fileHandler);
     }
 }

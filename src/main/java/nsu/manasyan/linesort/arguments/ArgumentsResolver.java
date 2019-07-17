@@ -21,9 +21,9 @@ public class ArgumentsResolver {
         return commandLineOptions;
     }
 
-    private static void checkIsEmpty(String option){
-        if(option.isEmpty()){
-            throw new WrongArgumentException("Wrong argument value: " + option);
+    private static void checkIsEmpty(String optionName, String optionValue){
+        if(optionValue.isEmpty()){
+            throw new WrongArgumentException(optionName + "'s value must not be empty");
         }
     }
 }

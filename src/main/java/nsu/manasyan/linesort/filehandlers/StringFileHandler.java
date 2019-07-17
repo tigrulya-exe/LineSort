@@ -1,6 +1,6 @@
 package nsu.manasyan.linesort.filehandlers;
 
-import nsu.manasyan.linesort.sorter.InsertionSorter;
+import nsu.manasyan.linesort.sorter.Sorter;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -11,20 +11,18 @@ import java.util.List;
 public class StringFileHandler extends FileHandler{
     private Comparator<String>  comparator;
 
-    public StringFileHandler(Path filePath, String outFilePrefix, Comparator<String> comparator) {
-        super(filePath,outFilePrefix);
+    public StringFileHandler(Path filePath, String outFilePrefix, Sorter sorter, Comparator<String> comparator) {
+        super(filePath,outFilePrefix,sorter);
         this.comparator = comparator;
     }
 
     @Override
     public void run() {
-        InsertionSorter sorter = new InsertionSorter();
-
         try{ List<String> strings = Files.readAllLines(getFilePath());
-            sorter.sort(strings,comparator);
+            getSorter().sort(strings,comparator);
             Files.write(getOutFileName(),strings);
         }  catch (IOException e) {
-            e.printStackTrace();
+            System.err.println(e.getLocalizedMessage());
         }
     }
 }

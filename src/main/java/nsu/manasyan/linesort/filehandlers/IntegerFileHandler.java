@@ -1,7 +1,6 @@
 package nsu.manasyan.linesort.filehandlers;
 
-import nsu.manasyan.linesort.exceptions.WrongFileTypeException;
-import nsu.manasyan.linesort.sorter.InsertionSorter;
+import nsu.manasyan.linesort.sorter.Sorter;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,21 +12,19 @@ import java.util.stream.Collectors;
 public class IntegerFileHandler extends FileHandler {
     private Comparator<Integer> comparator;
 
-    public IntegerFileHandler(Path filePath, String outFilePrefix, Comparator<Integer> comparator) {
-        super(filePath,outFilePrefix);
+    public IntegerFileHandler(Path filePath, String outFilePrefix, Sorter sorter, Comparator<Integer> comparator) {
+        super(filePath, outFilePrefix, sorter);
         this.comparator = comparator;
     }
 
     @Override
     public void run() {
-        InsertionSorter sorter = new InsertionSorter();
-
         try{ List<String> strings = Files.readAllLines(getFilePath());
             List<Integer> values = strings.stream().map(Integer::parseInt).collect(Collectors.toList());
-            sorter.sort(values,comparator);
+            getSorter().sort(values,comparator);
             Files.write(getOutFileName(),getOutLines(values));
         }  catch (IOException e) {
-            e.printStackTrace();
+            System.err.println(e.getLocalizedMessage());
         } catch (NumberFormatException nfe){
             System.err.println(getFileTypeErrorMessage());
         }
