@@ -20,7 +20,7 @@ public class StringFileHandler extends FileHandler{
     public void run() {
         try{ List<String> strings = Files.readAllLines(getFilePath());
             getSorter().sort(strings,comparator);
-            Files.write(getOutFileName(),strings);
+            Files.write(getOutFilePath(),strings);
         }  catch (IOException e) {
             System.err.println(e.getLocalizedMessage());
         }

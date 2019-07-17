@@ -22,7 +22,7 @@ public class IntegerFileHandler extends FileHandler {
         try{ List<String> strings = Files.readAllLines(getFilePath());
             List<Integer> values = strings.stream().map(Integer::parseInt).collect(Collectors.toList());
             getSorter().sort(values,comparator);
-            Files.write(getOutFileName(),getOutLines(values));
+            Files.write(getOutFilePath(),getOutLines(values));
         }  catch (IOException e) {
             System.err.println(e.getLocalizedMessage());
         } catch (NumberFormatException nfe){

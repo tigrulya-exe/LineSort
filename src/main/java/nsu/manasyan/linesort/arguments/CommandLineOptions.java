@@ -1,8 +1,5 @@
 package nsu.manasyan.linesort.arguments;
 
-import nsu.manasyan.linesort.Main;
-
-import java.util.List;
 import java.util.Map;
 
 public class CommandLineOptions {
